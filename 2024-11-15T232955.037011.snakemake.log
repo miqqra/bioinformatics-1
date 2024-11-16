@@ -1,0 +1,93 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+all                    1
+flagstat               1
+index_reference        1
+map_reads              1
+sam_to_bam             1
+sort_bam               1
+total                  6
+
+Select jobs to execute...
+
+[Fri Nov 15 23:29:55 2024]
+rule index_reference:
+    input: reference.fna
+    output: reference.mmi
+    jobid: 5
+    reason: Missing output files: reference.mmi
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:29:56 2024]
+Finished job 5.
+1 of 6 steps (17%) done
+Select jobs to execute...
+
+[Fri Nov 15 23:29:56 2024]
+rule map_reads:
+    input: reference.mmi, SRR31294323.fastq
+    output: alignment.sam
+    jobid: 4
+    reason: Missing output files: alignment.sam; Input files updated by another job: reference.mmi
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:32:40 2024]
+Finished job 4.
+2 of 6 steps (33%) done
+Select jobs to execute...
+
+[Fri Nov 15 23:32:40 2024]
+rule sam_to_bam:
+    input: alignment.sam
+    output: alignment.bam
+    jobid: 3
+    reason: Missing output files: alignment.bam; Input files updated by another job: alignment.sam
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:34:20 2024]
+Finished job 3.
+3 of 6 steps (50%) done
+Select jobs to execute...
+
+[Fri Nov 15 23:34:20 2024]
+rule sort_bam:
+    input: alignment.bam
+    output: alignment.sorted.bam
+    jobid: 2
+    reason: Missing output files: alignment.sorted.bam; Input files updated by another job: alignment.bam
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:34:34 2024]
+Finished job 2.
+4 of 6 steps (67%) done
+Select jobs to execute...
+
+[Fri Nov 15 23:34:34 2024]
+rule flagstat:
+    input: alignment.sorted.bam
+    output: flagstat_output.txt
+    jobid: 1
+    reason: Missing output files: flagstat_output.txt; Input files updated by another job: alignment.sorted.bam
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:34:41 2024]
+Finished job 1.
+5 of 6 steps (83%) done
+Select jobs to execute...
+
+[Fri Nov 15 23:34:41 2024]
+localrule all:
+    input: flagstat_output.txt
+    jobid: 0
+    reason: Input files updated by another job: flagstat_output.txt
+    resources: tmpdir=/tmp
+
+[Fri Nov 15 23:34:41 2024]
+Finished job 0.
+6 of 6 steps (100%) done
+Complete log: .snakemake/log/2024-11-15T232955.037011.snakemake.log
